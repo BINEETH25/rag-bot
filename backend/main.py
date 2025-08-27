@@ -1,10 +1,10 @@
 from fastapi import FastAPI
 from pydantic import BaseModel
 from fastapi.middleware.cors import CORSMiddleware
-from .rag import answer
-from .config import API_HOST, API_PORT
+from .rag_local import answer
+from .config_local import API_HOST, API_PORT
 
-app = FastAPI(title="RAG API")
+app = FastAPI(title="RAG API (Local/Ollama)")
 
 app.add_middleware(
     CORSMiddleware,
@@ -22,5 +22,4 @@ def health():
 
 @app.post("/chat")
 def chat(req: ChatRequest):
-    out = answer(req.query, req.k)
-    return out
+    return answer(req.query, req.k)
