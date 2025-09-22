@@ -1,4 +1,4 @@
-# --- replace the imports at the top ---
+
 from typing import List, Optional
 import os
 from pathlib import Path
@@ -14,7 +14,6 @@ from langchain.schema import Document
 from .config_local import CHROMA_DIR, DATA_DIR, OLLAMA_BASE_URL, CHAT_MODEL, EMBED_MODEL
 
 
-# --- add this helper to load docs without 'unstructured' ---
 def load_docs() -> List[Document]:
     docs: List[Document] = []
     data_dir = Path(DATA_DIR)
@@ -60,8 +59,7 @@ def ingest():
     raw_docs = load_docs()
     if not raw_docs:
         raise RuntimeError(
-            "No documents loaded. Put PDFs/TXTs/MDs into the 'data/' folder, "
-            "or check the console for [error]/[skip] lines."
+            
         )
     chunks = chunk_docs(raw_docs)
     vs = get_vectorstore()
@@ -81,8 +79,7 @@ def answer(query: str, k: int = 4, system_prompt: Optional[str] = None) -> dict:
     ])
 
     sys = system_prompt or (
-        "You are a helpful assistant. Answer using only the provided context. "
-        "If the answer isn't in the context, say you don't know."
+        
     )
 
     llm = ChatOllama(model=CHAT_MODEL, base_url=OLLAMA_BASE_URL, temperature=0)
